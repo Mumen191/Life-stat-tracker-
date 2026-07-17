@@ -1,0 +1,9 @@
+{
+  "name": "Life Stats Tracker",
+  "short_name": "Life Stats",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4ead7",
+  "theme_color": "#f4ead7",
+  "description": "A game-style daily life stat tracker."
+}

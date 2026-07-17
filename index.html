@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f4ead7" />
+  <title>Life Stats</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">PLAYER PROFILE</p>
+        <h1 id="playerName">Mumen</h1>
+      </div>
+      <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙</button>
+    </header>
+
+    <section class="level-card panel">
+      <div class="avatar">M</div>
+      <div class="level-info">
+        <div class="row between">
+          <strong>Level <span id="levelValue">1</span></strong>
+          <span id="xpText">0 / 100 XP</span>
+        </div>
+        <div class="progress large"><span id="xpBar"></span></div>
+        <p class="muted" id="todayDate"></p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">ATTRIBUTES</p>
+          <h2>Your Stats</h2>
+        </div>
+        <button id="resetDayBtn" class="text-btn">Reset today</button>
+      </div>
+      <div id="statsGrid" class="stats-grid"></div>
+    </section>
+
+    <section class="panel sleep-panel">
+      <div class="section-heading compact">
+        <div>
+          <p class="eyebrow">RECOVERY</p>
+          <h2>Sleep Meter</h2>
+        </div>
+        <span id="sleepScore" class="score-badge">0%</span>
+      </div>
+      <div class="sleep-visual">
+        <div class="moon">☾</div>
+        <div class="sleep-copy">
+          <div class="progress large"><span id="sleepBar"></span></div>
+          <p id="sleepMessage" class="muted">Log last night's sleep.</p>
+        </div>
+      </div>
+      <div class="sleep-inputs">
+        <label>Hours slept<input id="sleepHours" type="number" min="0" max="14" step="0.25" placeholder="7.5" /></label>
+        <label>Quality<select id="sleepQuality"><option value="1">Poor</option><option value="2">Okay</option><option value="3" selected>Good</option><option value="4">Great</option></select></label>
+        <button id="saveSleepBtn" class="primary-btn">Log sleep</button>
+      </div>
+    </section>
+
+
+    <section class="panel intimacy-panel">
+      <div class="section-heading compact">
+        <div>
+          <p class="eyebrow">PRIVATE WELLNESS</p>
+          <h2>Sex Life & Intimacy</h2>
+        </div>
+        <span id="intimacyScore" class="score-badge">0%</span>
+      </div>
+
+      <div class="intimacy-hero">
+        <div class="intimacy-orb"><span id="intimacyOrbValue">0</span><small>score</small></div>
+        <div class="intimacy-summary">
+          <strong id="intimacyStatus">No entries yet</strong>
+          <p id="intimacyMessage" class="muted">Track confidence, communication, connection, and satisfaction.</p>
+          <div class="intimacy-kpis">
+            <span><b id="monthCount">0</b> this month</span>
+            <span><b id="lastIntimacy">—</b> last entry</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="intimacyMetrics" class="metric-grid"></div>
+
+      <details class="log-details">
+        <summary>+ Log an intimate experience</summary>
+        <div class="intimacy-form">
+          <label>Experience
+            <select id="intimacyType">
+              <option value="affection">Affection / closeness</option>
+              <option value="date">Romantic date</option>
+              <option value="sexual">Sexual activity</option>
+              <option value="solo">Solo sexual wellness</option>
+            </select>
+          </label>
+          <label>Confidence <span id="confidenceLabel">3/5</span><input id="intimacyConfidence" type="range" min="1" max="5" value="3" /></label>
+          <label>Connection <span id="connectionLabel">3/5</span><input id="intimacyConnection" type="range" min="1" max="5" value="3" /></label>
+          <label>Communication <span id="communicationLabel">3/5</span><input id="intimacyCommunication" type="range" min="1" max="5" value="3" /></label>
+          <label>Satisfaction <span id="satisfactionLabel">3/5</span><input id="intimacySatisfaction" type="range" min="1" max="5" value="3" /></label>
+          <label class="wide">Private note (optional)<input id="intimacyNote" maxlength="90" placeholder="What felt good or what could improve?" /></label>
+          <label id="protectedWrap" class="toggle-row wide"><input id="intimacyProtected" type="checkbox" /> Protection used / pregnancy and STI risk considered</label>
+          <button id="saveIntimacyBtn" type="button" class="primary-btn wide">Save private entry</button>
+        </div>
+      </details>
+
+      <div class="intimacy-history-head">
+        <strong>Recent entries</strong>
+        <button id="clearIntimacyBtn" class="text-btn">Clear intimacy log</button>
+      </div>
+      <div id="intimacyHistory" class="intimacy-history"></div>
+      <p class="muted tiny privacy-note">Private by design: these entries are stored only in this browser on this device.</p>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">DAILY QUESTS</p>
+          <h2>Today's Tasks</h2>
+        </div>
+        <button id="addTaskBtn" class="primary-btn small">+ Add</button>
+      </div>
+      <div id="tasksList" class="tasks-list"></div>
+    </section>
+
+    <section class="panel history-panel">
+      <div class="section-heading compact">
+        <div>
+          <p class="eyebrow">PROGRESS</p>
+          <h2>7-Day Activity</h2>
+        </div>
+        <span id="streakText" class="score-badge">0 day streak</span>
+      </div>
+      <div id="historyChart" class="history-chart"></div>
+    </section>
+  </main>
+
+  <dialog id="taskDialog">
+    <form method="dialog" id="taskForm" class="modal-card">
+      <div class="row between"><h2>Add Daily Quest</h2><button value="cancel" class="icon-btn">✕</button></div>
+      <label>Task name<input id="taskName" required maxlength="40" placeholder="30-minute workout" /></label>
+      <label>Stat rewarded<select id="taskStat"></select></label>
+      <label>Stat points<input id="taskPoints" type="number" min="1" max="20" value="5" /></label>
+      <label>XP reward<input id="taskXp" type="number" min="1" max="50" value="10" /></label>
+      <button id="createTaskBtn" value="default" class="primary-btn">Create quest</button>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" class="modal-card">
+      <div class="row between"><h2>Settings</h2><button value="cancel" class="icon-btn">✕</button></div>
+      <label>Player name<input id="nameInput" maxlength="20" /></label>
+      <button id="saveNameBtn" value="default" class="primary-btn">Save name</button>
+      <button id="clearDataBtn" type="button" class="danger-btn">Erase all progress</button>
+      <p class="muted tiny">Your data stays on this device using local storage.</p>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
