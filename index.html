@@ -1,165 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#f4ead7" />
-  <title>Life Stats</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <main class="app-shell">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">PLAYER PROFILE</p>
-        <h1 id="playerName">Mumen</h1>
-      </div>
-      <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙</button>
-    </header>
-
-    <section class="level-card panel">
-      <div class="avatar">M</div>
-      <div class="level-info">
-        <div class="row between">
-          <strong>Level <span id="levelValue">1</span></strong>
-          <span id="xpText">0 / 100 XP</span>
-        </div>
-        <div class="progress large"><span id="xpBar"></span></div>
-        <p class="muted" id="todayDate"></p>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">ATTRIBUTES</p>
-          <h2>Your Stats</h2>
-        </div>
-        <button id="resetDayBtn" class="text-btn">Reset today</button>
-      </div>
-      <div id="statsGrid" class="stats-grid"></div>
-    </section>
-
-    <section class="panel sleep-panel">
-      <div class="section-heading compact">
-        <div>
-          <p class="eyebrow">RECOVERY</p>
-          <h2>Sleep Meter</h2>
-        </div>
-        <span id="sleepScore" class="score-badge">0%</span>
-      </div>
-      <div class="sleep-visual">
-        <div class="moon">☾</div>
-        <div class="sleep-copy">
-          <div class="progress large"><span id="sleepBar"></span></div>
-          <p id="sleepMessage" class="muted">Log last night's sleep.</p>
-        </div>
-      </div>
-      <div class="sleep-inputs">
-        <label>Hours slept<input id="sleepHours" type="number" min="0" max="14" step="0.25" placeholder="7.5" /></label>
-        <label>Quality<select id="sleepQuality"><option value="1">Poor</option><option value="2">Okay</option><option value="3" selected>Good</option><option value="4">Great</option></select></label>
-        <button id="saveSleepBtn" class="primary-btn">Log sleep</button>
-      </div>
-    </section>
-
-
-    <section class="panel intimacy-panel">
-      <div class="section-heading compact">
-        <div>
-          <p class="eyebrow">PRIVATE WELLNESS</p>
-          <h2>Sex Life & Intimacy</h2>
-        </div>
-        <span id="intimacyScore" class="score-badge">0%</span>
-      </div>
-
-      <div class="intimacy-hero">
-        <div class="intimacy-orb"><span id="intimacyOrbValue">0</span><small>score</small></div>
-        <div class="intimacy-summary">
-          <strong id="intimacyStatus">No entries yet</strong>
-          <p id="intimacyMessage" class="muted">Track confidence, communication, connection, and satisfaction.</p>
-          <div class="intimacy-kpis">
-            <span><b id="monthCount">0</b> this month</span>
-            <span><b id="lastIntimacy">—</b> last entry</span>
-          </div>
-        </div>
-      </div>
-
-      <div id="intimacyMetrics" class="metric-grid"></div>
-
-      <details class="log-details">
-        <summary>+ Log an intimate experience</summary>
-        <div class="intimacy-form">
-          <label>Experience
-            <select id="intimacyType">
-              <option value="affection">Affection / closeness</option>
-              <option value="date">Romantic date</option>
-              <option value="sexual">Sexual activity</option>
-              <option value="solo">Solo sexual wellness</option>
-            </select>
-          </label>
-          <label>Confidence <span id="confidenceLabel">3/5</span><input id="intimacyConfidence" type="range" min="1" max="5" value="3" /></label>
-          <label>Connection <span id="connectionLabel">3/5</span><input id="intimacyConnection" type="range" min="1" max="5" value="3" /></label>
-          <label>Communication <span id="communicationLabel">3/5</span><input id="intimacyCommunication" type="range" min="1" max="5" value="3" /></label>
-          <label>Satisfaction <span id="satisfactionLabel">3/5</span><input id="intimacySatisfaction" type="range" min="1" max="5" value="3" /></label>
-          <label class="wide">Private note (optional)<input id="intimacyNote" maxlength="90" placeholder="What felt good or what could improve?" /></label>
-          <label id="protectedWrap" class="toggle-row wide"><input id="intimacyProtected" type="checkbox" /> Protection used / pregnancy and STI risk considered</label>
-          <button id="saveIntimacyBtn" type="button" class="primary-btn wide">Save private entry</button>
-        </div>
-      </details>
-
-      <div class="intimacy-history-head">
-        <strong>Recent entries</strong>
-        <button id="clearIntimacyBtn" class="text-btn">Clear intimacy log</button>
-      </div>
-      <div id="intimacyHistory" class="intimacy-history"></div>
-      <p class="muted tiny privacy-note">Private by design: these entries are stored only in this browser on this device.</p>
-    </section>
-
-    <section>
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">DAILY QUESTS</p>
-          <h2>Today's Tasks</h2>
-        </div>
-        <button id="addTaskBtn" class="primary-btn small">+ Add</button>
-      </div>
-      <div id="tasksList" class="tasks-list"></div>
-    </section>
-
-    <section class="panel history-panel">
-      <div class="section-heading compact">
-        <div>
-          <p class="eyebrow">PROGRESS</p>
-          <h2>7-Day Activity</h2>
-        </div>
-        <span id="streakText" class="score-badge">0 day streak</span>
-      </div>
-      <div id="historyChart" class="history-chart"></div>
-    </section>
-  </main>
-
-  <dialog id="taskDialog">
-    <form method="dialog" id="taskForm" class="modal-card">
-      <div class="row between"><h2>Add Daily Quest</h2><button value="cancel" class="icon-btn">✕</button></div>
-      <label>Task name<input id="taskName" required maxlength="40" placeholder="30-minute workout" /></label>
-      <label>Stat rewarded<select id="taskStat"></select></label>
-      <label>Stat points<input id="taskPoints" type="number" min="1" max="20" value="5" /></label>
-      <label>XP reward<input id="taskXp" type="number" min="1" max="50" value="10" /></label>
-      <button id="createTaskBtn" value="default" class="primary-btn">Create quest</button>
-    </form>
-  </dialog>
-
-  <dialog id="settingsDialog">
-    <form method="dialog" class="modal-card">
-      <div class="row between"><h2>Settings</h2><button value="cancel" class="icon-btn">✕</button></div>
-      <label>Player name<input id="nameInput" maxlength="20" /></label>
-      <button id="saveNameBtn" value="default" class="primary-btn">Save name</button>
-      <button id="clearDataBtn" type="button" class="danger-btn">Erase all progress</button>
-      <p class="muted tiny">Your data stays on this device using local storage.</p>
-    </form>
-  </dialog>
-
-  <script src="app.js"></script>
-</body>
-</html>
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'><meta name='theme-color' content='#10151f'><meta name='apple-mobile-web-app-capable' content='yes'><link rel='manifest' href='manifest.json'><link rel='stylesheet' href='styles.css'><title>Life RPG</title></head><body>
+<div class='app'><header><div><b class='brand'>LIFE RPG</b><h1 id='greet'>Welcome back, Mumen</h1><p>Every day is a new quest.</p></div><button id='settings'>⚙️</button></header>
+<main>
+<section id='home' class='view active'>
+<div class='hero'>
+<article class='panel character-card'><div class='stage'><svg viewBox='0 0 280 420' class='character'><defs><linearGradient id='shirt' x1='0' x2='1'><stop stop-color='#202b43'/><stop offset='1' stop-color='#43547c'/></linearGradient><linearGradient id='skin' x1='0' x2='1'><stop stop-color='#c99369'/><stop offset='1' stop-color='#e1b38d'/></linearGradient></defs><ellipse cx='140' cy='396' rx='86' ry='14' fill='rgba(0,0,0,.25)'/><g class='breathe'><circle cx='140' cy='84' r='51' fill='url(#skin)'/><path d='M89 78c2-46 25-67 54-67 37 0 59 24 59 67-16-22-37-31-61-31-22 0-38 10-52 31z' fill='#17191e'/><path d='M118 128h44v36h-44z' fill='url(#skin)'/><path d='M69 360c2-116 22-198 71-198s69 82 71 198z' fill='url(#shirt)'/><path d='M105 166l35 33 35-33' fill='none' stroke='#d7dfef' stroke-width='9' stroke-linecap='round'/><path d='M76 207c-27 31-36 74-37 127' stroke='url(#skin)' stroke-width='25' stroke-linecap='round'/><path d='M204 207c27 31 36 74 37 127' stroke='url(#skin)' stroke-width='25' stroke-linecap='round'/><path d='M98 358l-7 37' stroke='#1b2232' stroke-width='32' stroke-linecap='round'/><path d='M182 358l7 37' stroke='#1b2232' stroke-width='32' stroke-linecap='round'/></g></svg><div class='quote'>“Discipline today. Freedom tomorrow.”</div></div><div class='player'><div class='level'>LV <strong id='level'>1</strong></div><div><strong id='name'>Mumen</strong><small id='title'>New Adventurer</small><div class='bar'><i id='xpbar'></i></div><small id='xptext'>0 / 100 XP</small></div></div></article>
+<div class='stack'><article class='panel'><div class='head'><div><span>DAILY QUESTS</span><h2>Today</h2></div><b>🔥 <em id='streak'>0</em></b></div><div id='quests'></div><form id='qform'><input id='qinput' placeholder='Add a custom quest'><button>Add</button></form></article><article class='panel'><div class='head'><div><span>QUICK ACTIONS</span><h2>Log progress</h2></div></div><div id='quick' class='quick'></div></article></div></div>
+<article class='panel'><div class='head'><div><span>ATTRIBUTES</span><h2>Your stats</h2></div><button id='adjust'>Adjust</button></div><div id='stats' class='stats'></div></article>
+<div class='dash'>
+<article class='panel'><div class='head'><div><span>GYM</span><h2>Strength log</h2></div></div><div class='two'><label>Bench PR<input id='bench' type='number' placeholder='lb'></label><label>Squat PR<input id='squat' type='number' placeholder='lb'></label><label>Deadlift PR<input id='deadlift' type='number' placeholder='lb'></label><label>Bodyweight<input id='weight' type='number' step='.1' placeholder='lb'></label></div><button id='savegym' class='primary'>Save gym progress</button><div id='gymsum'></div></article>
+<article class='panel'><div class='head'><div><span>RECOVERY</span><h2>Sleep</h2></div><b id='sleepscore'>0%</b></div><div class='bar big'><i id='sleepbar'></i></div><div class='two'><label>Hours<input id='hours' type='number' value='7.5' step='.25'></label><label>Quality<select id='quality'><option value='.75'>Poor</option><option value='.9'>Okay</option><option value='1' selected>Good</option><option value='1.1'>Excellent</option></select></label></div><button id='savesleep' class='primary'>Log sleep</button></article>
+<article class='panel'><div class='head'><div><span>FINANCE</span><h2>Stocks & money</h2></div></div><label class='check'><input id='stocks' type='checkbox'><i></i><div><b>Check your stocks</b><small>Review positions, news and risk.</small></div></label><div class='two'><label>Portfolio<input id='portfolio' type='number' placeholder='$'></label><label>Savings<input id='savings' type='number' placeholder='$'></label></div><button id='savefinance' class='primary'>Save finance update</button><div id='finsum'></div></article>
+<article class='panel'><div class='head'><div><span>ACHIEVEMENTS</span><h2>Unlocked</h2></div></div><div id='achievements'></div></article>
+</div></section>
+<section id='journal' class='view'><article class='panel'><div class='head'><div><span>JOURNAL</span><h2>Daily entry</h2></div></div><label>Mood<select id='mood'><option>Great</option><option>Good</option><option selected>Okay</option><option>Low</option></select></label><label>What happened today?<textarea id='journaltext' rows='7'></textarea></label><button id='savejournal' class='primary'>Save entry</button></article><article class='panel'><div class='head'><div><span>HISTORY</span><h2>Recent entries</h2></div></div><div id='journals'></div></article></section>
+<section id='calendar' class='view'><article class='panel'><div class='head'><div><span>CALENDAR</span><h2>Upcoming events</h2></div></div><div class='two'><label>Event<input id='eventtitle'></label><label>Date<input id='eventdate' type='date'></label></div><button id='addevent' class='primary'>Add event</button><div id='events'></div></article></section>
+<section id='private' class='view'><article class='panel'><div id='locked'><div class='lock'>🔒</div><h2>Private area</h2><p>Relationship and intimacy check-ins stay on this device.</p><label>PIN<input id='pinentry' type='password' inputmode='numeric' maxlength='6'></label><button id='unlock' class='primary'>Unlock</button></div><div id='unlocked' hidden><div class='head'><div><span>PRIVATE</span><h2>Sex life & intimacy</h2></div><button id='lock'>Lock</button></div><div id='ranges'></div><label>Private note<textarea id='privatenote' rows='5'></textarea></label><button id='saveprivate' class='primary'>Save private check-in</button></div></article></section>
+</main><nav><button data-view='home' class='active'>🏠<span>Home</span></button><button data-view='journal'>📓<span>Journal</span></button><button data-view='calendar'>📅<span>Calendar</span></button><button data-view='private'>🔒<span>Private</span></button></nav></div>
+<dialog id='settingsdlg'><div class='dialog'><h2>Settings</h2><label>Player name<input id='nameset'></label><label>Private PIN<input id='pinset' type='password' maxlength='6'></label><button id='savesettings' class='primary'>Save settings</button><button id='reset' class='danger'>Reset all app data</button><button id='closesettings'>Close</button></div></dialog>
+<dialog id='statsdlg'><div class='dialog'><h2>Adjust stats</h2><div id='statinputs'></div><button id='savestats' class='primary'>Save</button><button id='closestats'>Close</button></div></dialog>
+<script src='app.js'></script></body></html>

@@ -1,9 +1,17 @@
-LIFE STATS TRACKER
+LIFE RPG V2
 
-Open index.html in a browser to preview it.
-For phone installation and full offline support, upload the entire folder to a free static host such as GitHub Pages, Netlify, or Cloudflare Pages.
+Upload all six files to the root of your EXISTING GitHub repository:
+index.html
+styles.css
+app.js
+manifest.json
+service-worker.js
+README.txt
 
-On iPhone: open the hosted link in Safari, tap Share, then Add to Home Screen.
-On Android: open the hosted link in Chrome, tap the menu, then Install app or Add to Home screen.
+Use Add file > Upload files, then commit directly to main.
+GitHub Pages will update automatically. You do not need a new repository.
 
-Your progress is stored locally in the browser on that device.
+Default private PIN: 1234
+Change it in Settings.
+
+All progress is saved locally on the browser/device.
