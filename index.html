@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#edf2ec">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Life RPG">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Life RPG</title>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div>
+      <div class="brand">LIFE RPG</div>
+      <h1 id="welcome">Welcome back, Mumen</h1>
+      <p>Build a life you’re proud to live.</p>
+    </div>
+    <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙︎</button>
+  </header>
+
+  <main>
+    <section class="hero card">
+      <div class="avatar-panel">
+        <svg class="avatar" viewBox="0 0 260 380" aria-label="Faceless character">
+          <defs>
+            <linearGradient id="shirt" x1="0" x2="1">
+              <stop offset="0%" stop-color="#b97852"/>
+              <stop offset="100%" stop-color="#d5a078"/>
+            </linearGradient>
+            <linearGradient id="skin" x1="0" x2="1">
+              <stop offset="0%" stop-color="#c8946f"/>
+              <stop offset="100%" stop-color="#e0b18b"/>
+            </linearGradient>
+          </defs>
+          <ellipse cx="130" cy="354" rx="78" ry="12" fill="rgba(42,47,42,.12)"/>
+          <g class="breathe">
+            <circle cx="130" cy="76" r="46" fill="url(#skin)"/>
+            <path d="M84 70c4-42 26-58 49-58 33 0 52 24 52 58-15-17-31-24-52-24-19 0-33 8-49 24z" fill="#333633"/>
+            <rect x="111" y="112" width="38" height="32" rx="10" fill="url(#skin)"/>
+            <path d="M64 319c4-108 23-174 66-174s62 66 66 174z" fill="url(#shirt)"/>
+            <path d="M82 171c-25 28-34 71-36 121" stroke="url(#skin)" stroke-width="22" stroke-linecap="round"/>
+            <path d="M178 171c25 28 34 71 36 121" stroke="url(#skin)" stroke-width="22" stroke-linecap="round"/>
+            <path d="M101 316l-6 34M159 316l6 34" stroke="#4c524d" stroke-width="28" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="quote-card">
+          <p id="dailyQuote"></p>
+          <span id="quoteTheme"></span>
+        </div>
+      </div>
+
+      <div class="profile-panel">
+        <div class="profile-line">
+          <div>
+            <span class="eyebrow">PLAYER</span>
+            <h2 id="playerName">Mumen</h2>
+          </div>
+          <span class="title-chip" id="playerTitle">New Adventurer</span>
+        </div>
+        <div class="profile-line">
+          <span>Level <b id="level">1</b></span>
+          <span id="xpText">0 / 100 XP</span>
+        </div>
+        <div class="progress"><div id="xpBar" class="fill"></div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div><span class="eyebrow">DAILY QUESTS</span><h2>Today</h2></div>
+        <span class="streak">🔥 <b id="streak">0</b></span>
+      </div>
+      <div id="questList" class="quest-list"></div>
+      <form id="questForm" class="inline-form">
+        <input id="questInput" placeholder="Add a custom quest">
+        <button>Add</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div><span class="eyebrow">ATTRIBUTES</span><h2>Your Stats</h2></div>
+        <button id="editStatsBtn" class="text-btn">Adjust</button>
+      </div>
+      <div id="statsGrid" class="stats-grid"></div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <span class="eyebrow">RECOVERY</span><h2>Sleep Meter</h2>
+        <div class="meter-row"><div class="progress big"><div id="sleepBar" class="fill sleep"></div></div><b id="sleepScore">0%</b></div>
+        <div class="two">
+          <label>Hours<input id="sleepHours" type="number" min="0" max="14" step=".25" value="7.5"></label>
+          <label>Quality<select id="sleepQuality"><option value=".75">Poor</option><option value=".9">Okay</option><option selected value="1">Good</option><option value="1.1">Excellent</option></select></label>
+        </div>
+        <button id="saveSleepBtn" class="primary">Log sleep</button>
+      </section>
+
+      <section class="card">
+        <span class="eyebrow">FINANCE</span><h2>Stocks & Money</h2>
+        <label class="check-card">
+          <input id="stocksCheck" type="checkbox">
+          <span class="check-ui"></span>
+          <div><b>Check your stocks</b><small>Review positions, news, and risk.</small></div>
+        </label>
+        <div class="two">
+          <label>Portfolio<input id="portfolioInput" type="number" min="0" placeholder="$0"></label>
+          <label>Savings<input id="savingsInput" type="number" min="0" placeholder="$0"></label>
+        </div>
+        <button id="saveFinanceBtn" class="primary">Save finance progress</button>
+      </section>
+
+      <section class="card">
+        <span class="eyebrow">GYM</span><h2>Strength Progress</h2>
+        <div class="two">
+          <label>Bench PR<input id="benchInput" type="number" min="0" placeholder="lb"></label>
+          <label>Squat PR<input id="squatInput" type="number" min="0" placeholder="lb"></label>
+          <label>Deadlift PR<input id="deadliftInput" type="number" min="0" placeholder="lb"></label>
+          <label>Bodyweight<input id="weightInput" type="number" min="0" step=".1" placeholder="lb"></label>
+        </div>
+        <button id="saveGymBtn" class="primary">Save gym progress</button>
+      </section>
+
+      <section class="card">
+        <span class="eyebrow">QUICK LOGS</span><h2>Life Areas</h2>
+        <div id="quickGrid" class="quick-grid"></div>
+      </section>
+    </div>
+
+    <section class="card">
+      <span class="eyebrow">ACHIEVEMENTS</span><h2>Badges</h2>
+      <div id="achievementList" class="achievement-grid"></div>
+    </section>
+
+    <section class="card">
+      <span class="eyebrow">JOURNAL</span><h2>Daily Notes</h2>
+      <label>Mood<select id="moodSelect"><option>Great</option><option>Good</option><option selected>Okay</option><option>Low</option></select></label>
+      <label>Entry<textarea id="journalText" rows="4" placeholder="What happened today?"></textarea></label>
+      <button id="saveJournalBtn" class="primary">Save journal entry</button>
+      <div id="journalList"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div><span class="eyebrow">PRIVATE</span><h2>Sex Life & Intimacy</h2></div>
+        <button id="togglePrivateBtn" class="text-btn">Show</button>
+      </div>
+      <div id="privateContent" hidden>
+        <div class="ranges">
+          <label>Confidence<input id="confidence" type="range" min="0" max="100"><output id="confidenceOut"></output></label>
+          <label>Connection<input id="connection" type="range" min="0" max="100"><output id="connectionOut"></output></label>
+          <label>Communication<input id="communication" type="range" min="0" max="100"><output id="communicationOut"></output></label>
+          <label>Satisfaction<input id="satisfaction" type="range" min="0" max="100"><output id="satisfactionOut"></output></label>
+        </div>
+        <label>Private note<textarea id="privateNote" rows="3" placeholder="Stored only on this device"></textarea></label>
+        <button id="savePrivateBtn" class="primary">Save private check-in</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<dialog id="settingsDialog"><div class="modal">
+  <h2>Settings</h2>
+  <label>Player name<input id="nameInput"></label>
+  <button id="saveSettingsBtn" class="primary">Save</button>
+  <button id="resetBtn" class="danger">Reset all data</button>
+  <button id="closeSettingsBtn">Close</button>
+</div></dialog>
+
+<dialog id="statsDialog"><div class="modal">
+  <h2>Adjust stats</h2>
+  <div id="statInputs"></div>
+  <button id="saveStatsBtn" class="primary">Save</button>
+  <button id="closeStatsBtn">Close</button>
+</div></dialog>
+
+<script src="./app.js"></script>
+</body>
+</html>
