@@ -2,7 +2,7 @@
   "name": "Life RPG",
   "short_name": "Life RPG",
   "id": "/Life-stat-tracker-/",
-  "start_url": "./?source=pwa",
+  "start_url": "./?source=pwa-v4",
   "scope": "./",
   "display": "standalone",
   "display_override": [

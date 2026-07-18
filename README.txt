@@ -1,26 +1,27 @@
-LIFE RPG — CHILL V3
+LIFE RPG — ROADMAP V4
 
+NEW IN THIS BUILD
+- App access code: 8965
+- Auto-lock after 5 minutes
+- Manual Lock App button
+- Level-by-level visual character evolution
+- New physique, posture, clothing color, accessories, aura, and milestone stages
+- Daily tailored quotes
+- Private adult dating / relationship / partner history log
+- Adults 18+ validation
+- Edit, delete, include/exclude from displayed total
+- Names and private details hidden from the home screen
+
+UPLOAD
 Upload ALL files in this folder to the root of your existing GitHub repository.
 
-Files:
-index.html
-styles.css
-app.js
-manifest.json
-service-worker.js
-icon-192.png
-icon-512.png
-apple-touch-icon.png
-README.txt
+IPHONE UPDATE
+1. Delete the old Home Screen icon.
+2. Settings > Safari > Advanced > Website Data.
+3. Delete mumen191.github.io data.
+4. Open the site in Safari.
+5. Share > Add to Home Screen.
+6. Open using the new icon.
 
-Then commit directly to main and wait 1–2 minutes.
-
-IMPORTANT FOR IPHONE STANDALONE MODE
-1. Delete the old Life RPG Home Screen icon.
-2. Go to Settings > Safari > Advanced > Website Data.
-3. Remove the entry for mumen191.github.io.
-4. Open the GitHub Pages URL in SAFARI, not Chrome.
-5. Tap Share > Add to Home Screen.
-6. Launch using the new Home Screen icon.
-
-The app now includes a daily rotating quote based on discipline, gym, faith, sleep, confidence, career, family, learning, and finance goals.
+All app information is stored locally in the browser on that device.
+Default access code: 8965

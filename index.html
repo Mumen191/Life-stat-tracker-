@@ -14,24 +14,45 @@
   <title>Life RPG</title>
 </head>
 <body>
-<div class="app">
+<div id="lockScreen" class="lock-screen">
+  <div class="lock-card">
+    <div class="lock-emblem">✦</div>
+    <span class="eyebrow">LIFE RPG</span>
+    <h1>Enter your world</h1>
+    <p>Your progress and private history stay on this device.</p>
+    <label>Access code
+      <div class="pin-wrap">
+        <input id="pinInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+        <button id="togglePin" type="button">Show</button>
+      </div>
+    </label>
+    <button id="unlockAppBtn" class="primary">Unlock</button>
+    <small id="lockMessage"></small>
+  </div>
+</div>
+
+<div id="app" class="app" hidden>
   <header class="topbar">
     <div>
       <div class="brand">LIFE RPG</div>
       <h1 id="welcome">Welcome back, Mumen</h1>
       <p>Build a life you’re proud to live.</p>
     </div>
-    <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙︎</button>
+    <div class="top-actions">
+      <button id="lockNowBtn" class="icon-btn" aria-label="Lock app">🔒</button>
+      <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙︎</button>
+    </div>
   </header>
 
   <main>
     <section class="hero card">
-      <div class="avatar-panel">
-        <svg class="avatar" viewBox="0 0 260 380" aria-label="Faceless character">
+      <div id="avatarPanel" class="avatar-panel stage-1">
+        <div id="levelAura" class="level-aura"></div>
+        <svg class="avatar" viewBox="0 0 260 380" aria-label="Faceless evolving character">
           <defs>
             <linearGradient id="shirt" x1="0" x2="1">
-              <stop offset="0%" stop-color="#b97852"/>
-              <stop offset="100%" stop-color="#d5a078"/>
+              <stop id="shirtStart" offset="0%" stop-color="#b97852"/>
+              <stop id="shirtEnd" offset="100%" stop-color="#d5a078"/>
             </linearGradient>
             <linearGradient id="skin" x1="0" x2="1">
               <stop offset="0%" stop-color="#c8946f"/>
@@ -39,20 +60,23 @@
             </linearGradient>
           </defs>
           <ellipse cx="130" cy="354" rx="78" ry="12" fill="rgba(42,47,42,.12)"/>
-          <g class="breathe">
+          <g id="characterBody" class="breathe">
             <circle cx="130" cy="76" r="46" fill="url(#skin)"/>
-            <path d="M84 70c4-42 26-58 49-58 33 0 52 24 52 58-15-17-31-24-52-24-19 0-33 8-49 24z" fill="#333633"/>
+            <path id="hairPath" d="M84 70c4-42 26-58 49-58 33 0 52 24 52 58-15-17-31-24-52-24-19 0-33 8-49 24z" fill="#333633"/>
             <rect x="111" y="112" width="38" height="32" rx="10" fill="url(#skin)"/>
-            <path d="M64 319c4-108 23-174 66-174s62 66 66 174z" fill="url(#shirt)"/>
-            <path d="M82 171c-25 28-34 71-36 121" stroke="url(#skin)" stroke-width="22" stroke-linecap="round"/>
-            <path d="M178 171c25 28 34 71 36 121" stroke="url(#skin)" stroke-width="22" stroke-linecap="round"/>
+            <path id="torsoPath" d="M64 319c4-108 23-174 66-174s62 66 66 174z" fill="url(#shirt)"/>
+            <path id="leftArm" d="M82 171c-25 28-34 71-36 121" stroke="url(#skin)" stroke-width="22" stroke-linecap="round"/>
+            <path id="rightArm" d="M178 171c25 28 34 71 36 121" stroke="url(#skin)" stroke-width="22" stroke-linecap="round"/>
             <path d="M101 316l-6 34M159 316l6 34" stroke="#4c524d" stroke-width="28" stroke-linecap="round"/>
+            <path id="necklace" d="M112 151c10 12 26 12 36 0" fill="none" stroke="#d8c69c" stroke-width="3" opacity="0"/>
+            <circle id="watch" cx="207" cy="247" r="8" fill="#504b44" opacity="0"/>
           </g>
         </svg>
         <div class="quote-card">
           <p id="dailyQuote"></p>
           <span id="quoteTheme"></span>
         </div>
+        <div id="levelEffectText" class="level-effect-text"></div>
       </div>
 
       <div class="profile-panel">
@@ -68,6 +92,11 @@
           <span id="xpText">0 / 100 XP</span>
         </div>
         <div class="progress"><div id="xpBar" class="fill"></div></div>
+        <div class="evolution-box">
+          <span class="eyebrow">CURRENT EVOLUTION</span>
+          <b id="evolutionName">Foundation</b>
+          <small id="nextEvolution">Next visual upgrade at Level 2</small>
+        </div>
       </div>
     </section>
 
@@ -148,18 +177,45 @@
 
     <section class="card">
       <div class="section-head">
-        <div><span class="eyebrow">PRIVATE</span><h2>Sex Life & Intimacy</h2></div>
+        <div><span class="eyebrow">PRIVATE RELATIONSHIPS</span><h2>Dating & Intimacy</h2></div>
         <button id="togglePrivateBtn" class="text-btn">Show</button>
       </div>
       <div id="privateContent" hidden>
-        <div class="ranges">
-          <label>Confidence<input id="confidence" type="range" min="0" max="100"><output id="confidenceOut"></output></label>
-          <label>Connection<input id="connection" type="range" min="0" max="100"><output id="connectionOut"></output></label>
-          <label>Communication<input id="communication" type="range" min="0" max="100"><output id="communicationOut"></output></label>
-          <label>Satisfaction<input id="satisfaction" type="range" min="0" max="100"><output id="satisfactionOut"></output></label>
+        <div class="sub-card">
+          <span class="eyebrow">WELLNESS CHECK-IN</span>
+          <div class="ranges">
+            <label>Confidence<input id="confidence" type="range" min="0" max="100"><output id="confidenceOut"></output></label>
+            <label>Connection<input id="connection" type="range" min="0" max="100"><output id="connectionOut"></output></label>
+            <label>Communication<input id="communication" type="range" min="0" max="100"><output id="communicationOut"></output></label>
+            <label>Satisfaction<input id="satisfaction" type="range" min="0" max="100"><output id="satisfactionOut"></output></label>
+          </div>
+          <label>Private note<textarea id="privateNote" rows="3" placeholder="Stored only on this device"></textarea></label>
+          <button id="savePrivateBtn" class="primary">Save private check-in</button>
         </div>
-        <label>Private note<textarea id="privateNote" rows="3" placeholder="Stored only on this device"></textarea></label>
-        <button id="savePrivateBtn" class="primary">Save private check-in</button>
+
+        <div class="sub-card">
+          <div class="section-head">
+            <div><span class="eyebrow">ADULT HISTORY</span><h2>Relationship & Partner Log</h2></div>
+            <span class="count-chip"><b id="partnerCount">0</b> included</span>
+          </div>
+          <p class="privacy-note">Adults 18+ only. Names and details never appear on the home screen.</p>
+          <div class="two">
+            <label>Name or nickname<input id="partnerName" maxlength="60"></label>
+            <label>Age<input id="partnerAge" type="number" min="18" max="120" placeholder="18+"></label>
+            <label>Type<select id="partnerType"><option>Relationship</option><option>Dating</option><option>Casual</option><option>One-time encounter</option><option>Other</option></select></label>
+            <label>Status<select id="partnerStatus"><option>Past</option><option>Current</option><option>Complicated</option></select></label>
+            <label>Start date<input id="partnerStart" type="date"></label>
+            <label>End date<input id="partnerEnd" type="date"></label>
+          </div>
+          <label>Description / notes<textarea id="partnerDescription" rows="4" placeholder="Optional private context, memories, or lessons"></textarea></label>
+          <label class="check-card compact">
+            <input id="includeCount" type="checkbox" checked>
+            <span class="check-ui"></span>
+            <div><b>Include in displayed total</b><small>You can exclude an entry without deleting it.</small></div>
+          </label>
+          <button id="savePartnerBtn" class="primary">Add private entry</button>
+          <div id="partnerList" class="partner-list"></div>
+        </div>
       </div>
     </section>
   </main>
@@ -168,6 +224,8 @@
 <dialog id="settingsDialog"><div class="modal">
   <h2>Settings</h2>
   <label>Player name<input id="nameInput"></label>
+  <label>Access code<input id="pinSetting" type="password" inputmode="numeric" maxlength="4"></label>
+  <small>Current default: 8965</small>
   <button id="saveSettingsBtn" class="primary">Save</button>
   <button id="resetBtn" class="danger">Reset all data</button>
   <button id="closeSettingsBtn">Close</button>
